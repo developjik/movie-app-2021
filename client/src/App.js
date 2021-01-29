@@ -5,6 +5,7 @@ import NavBar from "./components/views/NavBar/NavBar";
 import LandingPage from "./components/views/LandingPage/LandingPage";
 import LoginPage from "./components/views/LoginPage/LoginPage";
 import RegisterPage from "./components/views/RegisterPage/RegisterPage";
+import MovieDetail from "./components/views/MovieDetail/MovieDetail";
 import Footer from "./components/views/Footer/Footer";
 
 import Auth from "./hoc/auth";
@@ -34,6 +35,11 @@ function App() {
           <Route exact path="/" component={Auth(LandingPage, null)} />
           <Route exact path="/register" component={Auth(RegisterPage, false)} />
           <Route exact path="/login" component={Auth(LoginPage, false)} />
+          <Route
+            exact
+            path="/movie/:movieId"
+            component={Auth(MovieDetail, null)}
+          />
         </Switch>
         <Footer />
       </Suspense>
