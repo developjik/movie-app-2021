@@ -32,6 +32,8 @@ const { auth } = require("./middleware/auth");
 
 // User model
 const { User } = require("./models/User");
+//Favorite Model
+const { Favorite } = require("./models/Favorite");
 
 //route
 app.get("/", (req, res) => {
@@ -99,6 +101,51 @@ app.get("/api/users/auth", auth, (req, res) => {
     name: req.user.name,
     role: req.user.role,
     image: req.user.image,
+  });
+});
+
+// Favorite 관련 route
+app.post("/api/favorite/favoriteNumber", (req, res) => {
+  Favorite.find({ "movieId": req.body.movieId }).exec((err, info) => {
+    if (err) return res.status(400).send(err);
+    return res.status(200).json({ success: true, favoriteNumber: info.length });
+  });
+});
+
+app.post("/api/favorite/favorited", (req, res) => {
+  Favorite.find({
+    "userFrom": req.body.userFrom,
+    "movieId": req.body.movieId,
+  }).exec((err, info) => {
+    if (err) return res.status(400).send(err);
+
+    if (info.length === 0) {
+      return res.status(200).json({ success: true, favorited: false });
+    } else {
+      return res.status(200).json({ success: true, favorited: true });
+    }
+  });
+});
+
+app.post("/api/favorite/addFavorite", (req, res) => {
+  const favorite = new Favorite(req.body)
+  favorite.save((err, doc) => {
+    if(err) return res.status(400).send(err)
+    return res.status(200).json({success: true, doc})
+  }) 
+});
+
+app.post("/api/favorite/removeFavorite", (req, res) => {
+  Favorite.findOneAndDelete({ "userFrom": req.body.userFrom, "movieId": req.body.movieId }).exec((err, doc) => {
+    if (err) return res.status(400).send(err);
+    return res.status(200).json({ success: true, doc });
+  });
+});
+
+app.post("/api/favorite/getFavoredMovie", (req, res) => {
+  Favorite.find({ "userFrom": req.body.userFrom }).exec((err, favorites) => {
+    if (err) return res.status(400).send(err);
+    return res.status(200).json({ success: true, favorites });
   });
 });
 

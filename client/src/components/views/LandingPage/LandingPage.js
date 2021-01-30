@@ -7,7 +7,7 @@ import { API_URL, API_KEY, IMAGE_BASE_URL } from "../../../config/config";
 import CarouselCards from "./Sections/CarouselCards";
 import GridCards from "./Sections/GridCards";
 
-import { Row, Button, Carousel } from "antd";
+import { Row, Button, Carousel,BackTop } from "antd";
 import { DownSquareOutlined } from "@ant-design/icons";
 
 function LandingPage(props) {
@@ -87,6 +87,7 @@ function LandingPage(props) {
           Load More
         </Button>
       </div>
+      <BackTop />
     </div>
   );
 }

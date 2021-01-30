@@ -24,7 +24,7 @@ function NavBar(props) {
         alert("logout fail");
       }
     });
-  };
+  }; 
 
   return (
     <nav>
@@ -77,9 +77,11 @@ function NavBar(props) {
           </Menu.Item>
           <Menu.Item
             key="user"
-            icon={<UserOutlined />}
-            disabled
+            icon={<UserOutlined />}            
             style={{ float: "right" }}
+            onClick={() => {
+              props.history.push("/favorite");
+            }}
           >
             {redux.userData.name}님
           </Menu.Item>
